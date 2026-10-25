@@ -1,0 +1,15 @@
+name: Verificar arquivos do site
+on:
+  push:
+  pull_request:
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validar arquivos obrigatórios
+        run: |
+          test -s docs/index.html
+          test -s docs/style.css
+          test -s docs/app.js
+          ! grep -R -E 'ghp_[[:alnum:]]{25,}|AIza[[:alnum:]_-]{20,}' docs/ README.md
